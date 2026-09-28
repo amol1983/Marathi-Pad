@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>मराठी पॅड — मराठी शिकूया</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF6E8;
+    --saffron:#FF9F1C;
+    --teal:#178A82;
+    --maroon:#A23B3B;
+    --mustard:#F0B429;
+    --ink:#3A2E26;
+    --card:#FFFFFF;
+    --green:#2F9E44;
+    --red:#E5484D;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    font-family:'Nunito',sans-serif;
+    color:var(--ink);
+    -webkit-tap-highlight-color:transparent;
+    overscroll-behavior:none;
+  }
+  button{font-family:inherit;cursor:pointer;}
+  .app{
+    max-width:480px;
+    margin:0 auto;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    background:
+      radial-gradient(circle at 90% -10%, rgba(255,159,28,0.15), transparent 40%),
+      radial-gradient(circle at -10% 10%, rgba(23,138,130,0.12), transparent 40%),
+      var(--cream);
+  }
+
+  header{
+    padding:16px 18px 6px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .mascot{
+    font-size:36px;
+    display:inline-block;
+    animation:sway 3s ease-in-out infinite;
+  }
+  @keyframes sway{0%,100%{transform:rotate(-6deg);}50%{transform:rotate(6deg);}}
+  .title{flex:1;min-width:0;}
+  .title h1{font-family:'Baloo 2',sans-serif;font-size:19px;margin:0;color:var(--maroon);}
+  .title p{margin:1px 0 0;font-size:11.5px;color:#8a7a6d;}
+  .star-pill{
+    flex:0 0 auto;
+    background:#fff;
+    border-radius:999px;
+    padding:6px 12px;
+    font-family:'Baloo 2',sans-serif;
+    font-size:13px;
+    color:var(--maroon);
+    box-shadow:0 2px 0 rgba(58,46,38,0.1);
+    display:flex;align-items:center;gap:4px;
+    border:none;
+  }
+
+  nav.tabs{
+    display:flex;
+    gap:4px;
+    padding:10px 10px;
+    margin:0 8px 6px;
+  }
+  .tab-btn{
+    flex:1;
+    border:none;
+    background:transparent;
+    color:#a99a8c;
+    font-family:'Baloo 2',sans-serif;
+    font-size:11px;
+    padding:6px 2px;
+    border-radius:14px;
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+  }
+  .tab-btn .ic{font-size:20px;}
+  .tab-btn.active{background:#fff;color:var(--teal);box-shadow:0 2px 0 rgba(58,46,38,0.08);}
+
+  main{flex:1;padding:0 16px 24px;overflow-y:auto;}
+  .section-label{font-family:'Baloo 2',sans-serif;font-size:14px;color:#8a7a6d;margin:10px 4px 8px;}
+  .card-block{background:#fff;border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:0 6px 0 rgba(58,46,38,0.08);}
+
+  /* Home */
+  .path-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;font-family:'Baloo 2',sans-serif;font-size:13px;color:var(--teal);}
+  .path-row span.arrow{color:#cbbfae;}
+  .cta-btn{
+    display:block;width:100%;border:none;background:var(--saffron);color:#fff;
+    font-family:'Baloo 2',sans-serif;font-size:17px;padding:14px;border-radius:16px;
+    margin-top:14px;box-shadow:0 4px 0 rgba(0,0,0,0.12);
+  }
+  .cta-btn:active{transform:translateY(2px);box-shadow:none;}
+  .stat-row{display:flex;gap:8px;margin-top:12px;}
+  .stat-chip{flex:1;background:var(--cream);border-radius:14px;padding:10px 6px;text-align:center;}
+  .stat-chip .n{font-family:'Baloo 2',sans-serif;font-size:18px;color:var(--maroon);}
+  .stat-chip .l{font-size:10px;color:#8a7a6d;}
+
+  /* Grids */
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .tile{
+    aspect-ratio:1/1;border:none;border-radius:16px;background:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    box-shadow:0 4px 0 rgba(58,46,38,0.09);transition:transform .12s ease;padding:4px;
+  }
+  .tile:active{transform:translateY(3px) scale(.97);box-shadow:0 1px 0 rgba(58,46,38,0.09);}
+  .tile.playing{background:var(--mustard);}
+  .tile .letter{font-family:'Baloo 2',sans-serif;font-size:22px;color:var(--maroon);}
+  .tile .emoji{font-size:22px;}
+  .tile .en{font-size:9px;color:#8a7a6d;font-weight:700;}
+
+  .subtabs{display:flex;gap:8px;margin-bottom:12px;}
+  .subtab-btn{border:none;background:#fff;color:var(--ink);font-family:'Baloo 2',sans-serif;font-size:13px;padding:8px 14px;border-radius:999px;box-shadow:0 2px 0 rgba(58,46,38,0.1);}
+  .subtab-btn.active{background:var(--teal);color:#fff;}
+  .back-btn{border:none;background:none;color:var(--teal);font-family:'Baloo 2',sans-serif;font-size:14px;padding:6px 0 10px;display:flex;align-items:center;gap:4px;}
+
+  /* Pair cards (Letters menu) */
+  .pair-card{
+    background:#fff;border-radius:18px;padding:14px;margin-bottom:10px;
+    display:flex;align-items:center;gap:12px;border:none;width:100%;text-align:left;
+    box-shadow:0 4px 0 rgba(58,46,38,0.08);
+  }
+  .pair-letters{display:flex;gap:6px;flex:0 0 auto;}
+  .pair-letters .pl{
+    font-family:'Baloo 2',sans-serif;font-size:22px;color:var(--maroon);
+    background:var(--cream);width:38px;height:38px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .pair-info{flex:1;}
+  .pair-info .t{font-family:'Baloo 2',sans-serif;font-size:14px;color:var(--ink);}
+  .pair-info .s{font-size:11px;color:#8a7a6d;margin-top:2px;}
+  .pair-badge{font-size:16px;}
+
+  /* Pair Lab */
+  .hint-box{background:var(--cream);border-radius:14px;padding:10px 14px;font-size:12.5px;color:#6b5c4e;margin-bottom:14px;line-height:1.5;}
+  .letter-block{margin-bottom:18px;}
+  .letter-head{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+  .big-letter-btn{
+    width:64px;height:64px;border-radius:18px;border:none;background:var(--maroon);color:#fff;
+    font-family:'Baloo 2',sans-serif;font-size:32px;box-shadow:0 4px 0 rgba(0,0,0,0.15);
+  }
+  .big-letter-btn:active{transform:translateY(2px);box-shadow:none;}
+  .baraakhadi-row{display:flex;gap:6px;flex-wrap:wrap;}
+  .baraakhadi-chip{border:none;background:var(--cream);color:var(--maroon);font-family:'Baloo 2',sans-serif;font-size:15px;padding:6px 12px;border-radius:10px;}
+  .say-caption{font-size:10.5px;color:var(--teal);font-weight:800;margin-top:4px;}
+
+  .wcard{background:var(--cream);border-radius:16px;padding:10px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;}
+  .wcard .emoji{font-size:30px;}
+  .wcard .word{font-family:'Baloo 2',sans-serif;font-size:16px;color:var(--maroon);}
+  .wcard .word .hl{color:var(--saffron);text-decoration:underline;text-decoration-thickness:2px;}
+  .wcard .en{font-size:10px;color:#8a7a6d;}
+  .wcard .btnrow{display:flex;gap:5px;margin-top:4px;}
+  .wcard .sbtn{border:none;background:#fff;border-radius:8px;padding:4px 8px;font-size:12px;}
+
+  /* Words / vocab */
+  .cat-card{aspect-ratio:1/0.9;border:none;background:#fff;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 0 rgba(58,46,38,0.08);}
+  .cat-card .ic{font-size:30px;}
+  .cat-card .lb{font-family:'Baloo 2',sans-serif;font-size:13px;color:var(--ink);}
+
+  /* Games menu */
+  .game-card{display:flex;align-items:center;gap:14px;background:#fff;border:none;border-radius:18px;padding:14px;margin-bottom:10px;width:100%;text-align:left;box-shadow:0 4px 0 rgba(58,46,38,0.08);}
+  .game-card .ic{font-size:32px;flex:0 0 auto;}
+  .game-card .t{font-family:'Baloo 2',sans-serif;font-size:15px;color:var(--maroon);}
+  .game-card .s{font-size:11.5px;color:#8a7a6d;margin-top:2px;}
+
+  /* MCQ */
+  .prompt-box{text-align:center;padding:20px 10px;}
+  .prompt-big{font-family:'Baloo 2',sans-serif;font-size:36px;color:var(--maroon);margin-bottom:6px;}
+  .prompt-sub{font-size:13px;color:#8a7a6d;margin-bottom:14px;}
+  .replay-round-btn{border:none;background:var(--saffron);color:#fff;border-radius:999px;padding:8px 16px;font-family:'Baloo 2',sans-serif;font-size:13px;margin-bottom:14px;}
+  .mcq-options{display:flex;flex-direction:column;gap:10px;}
+  .mcq-btn{border:none;background:#fff;border-radius:14px;padding:14px;font-family:'Baloo 2',sans-serif;font-size:18px;color:var(--ink);box-shadow:0 3px 0 rgba(58,46,38,0.1);}
+  .mcq-btn.correct{background:var(--green);color:#fff;}
+  .mcq-btn.wrong{background:var(--red);color:#fff;}
+  .mcq-row{display:flex;gap:10px;}
+  .mcq-row .mcq-btn{flex:1;}
+  .round-progress{display:flex;gap:4px;justify-content:center;margin-bottom:12px;}
+  .round-dot{width:8px;height:8px;border-radius:50%;background:#e2d8ca;}
+  .round-dot.done{background:var(--teal);}
+  .round-dot.now{background:var(--saffron);}
+
+  /* Match game */
+  .match-wrap{display:flex;gap:14px;}
+  .match-col{flex:1;display:flex;flex-direction:column;gap:8px;}
+  .match-item{border:none;background:#fff;border-radius:12px;padding:12px 6px;font-size:18px;box-shadow:0 3px 0 rgba(58,46,38,0.08);text-align:center;}
+  .match-item.selected{outline:3px solid var(--saffron);}
+  .match-item.matched{background:var(--green);color:#fff;opacity:.7;}
+  .match-item.shake{animation:shake .3s;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+
+  /* Letter pop */
+  .pop-field{position:relative;height:320px;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 0 rgba(58,46,38,0.08);}
+  .pop-letter{
+    position:absolute;width:48px;height:48px;border-radius:50%;border:none;
+    font-family:'Baloo 2',sans-serif;font-size:22px;color:#fff;background:var(--teal);
+    display:flex;align-items:center;justify-content:center;
+    animation:bob 2.4s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  .pop-letter.pop-out{animation:none;transform:scale(0);opacity:0;transition:all .25s ease;}
+  .pop-letter.miss{background:var(--red);}
+  .lives-row{display:flex;gap:4px;justify-content:center;margin:10px 0;font-size:18px;}
+
+  /* Progress */
+  .badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;}
+  .badge-item{background:var(--cream);border-radius:14px;padding:10px 4px;text-align:center;}
+  .badge-item.locked{opacity:.35;}
+  .badge-item .bic{font-size:26px;}
+  .badge-item .bl{font-size:9.5px;color:#6b5c4e;margin-top:3px;line-height:1.2;}
+
+  /* Footer controls (persistent) */
+  footer.controls{padding:8px 18px 4px;display:flex;align-items:center;gap:10px;}
+  .vol-icon{font-size:16px;}
+  input[type=range]{flex:1;accent-color:var(--saffron);}
+  .voice-row{display:flex;align-items:center;gap:8px;padding:0 18px 4px;}
+  .voice-row label{font-size:11.5px;font-weight:800;color:#8a7a6d;}
+  .voice-row select{flex:1;min-width:0;padding:6px 8px;border-radius:10px;border:1px solid #e8ddcf;background:#fff;color:var(--ink);font-size:11.5px;}
+
+  .toast{
+    position:fixed;left:50%;top:18px;transform:translateX(-50%) translateY(-20px);
+    background:var(--maroon);color:#fff;padding:10px 18px;border-radius:999px;
+    font-family:'Baloo 2',sans-serif;font-size:13px;opacity:0;transition:all .3s ease;z-index:50;
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .end-box{text-align:center;padding:24px 10px;}
+  .end-box .big{font-family:'Baloo 2',sans-serif;font-size:26px;color:var(--maroon);}
+  .end-box .msg{font-size:14px;color:#6b5c4e;margin:8px 0 16px;}
+  .ghost-btn{border:none;background:#fff;color:var(--teal);font-family:'Baloo 2',sans-serif;font-size:13px;padding:8px 16px;border-radius:999px;margin:4px;box-shadow:0 2px 0 rgba(58,46,38,0.08);}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <span class="mascot" id="mascot">🦜</span>
+    <div class="title"><h1>मिठू पॅड</h1><p>ऐक, बोल, ओळख, खेळ — मराठी शिकूया</p></div>
+    <button class="star-pill" id="starPill">⭐ <span id="starCount">0</span></button>
+  </header>
+  <nav class="tabs" id="tabs"></nav>
+  <main id="view"></main>
+  <footer class="controls">
+    <span class="vol-icon">🔈</span>
+    <input type="range" id="volume" min="0" max="1" step="0.05" value="1">
+    <span class="vol-icon">🔊</span>
+  </footer>
+  <div class="voice-row">
+    <label for="voiceSelect">आवाज</label>
+    <select id="voiceSelect"></select>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= DATA ================= */
+const VOWELS = [
+  {mr:"अ",word:"अननस",emoji:"🍍"},{mr:"आ",word:"आंबा",emoji:"🥭"},
+  {mr:"इ",word:"इंद्रधनुष्य",emoji:"🌈"},{mr:"ई",word:"ईश्वर",emoji:"🙏"},
+  {mr:"उ",word:"उंट",emoji:"🐫"},{mr:"ऊ",word:"ऊस",emoji:"🎋"},
+  {mr:"ऋ",word:"ऋषी",emoji:"🧘"},{mr:"ए",word:"एक",emoji:"☝️"},
+  {mr:"ऐ",word:"ऐरावत",emoji:"🐘"},{mr:"ओ",word:"ओढा",emoji:"🏞️"},
+  {mr:"औ",word:"औषध",emoji:"💊"},{mr:"अं",word:"अंगठी",emoji:"💍"},
+  {mr:"अः",word:"",emoji:"✨"},
+];
+const CONSONANTS = [
+  {mr:"क",word:"कमळ",emoji:"🪷"},{mr:"ख",word:"खरबूज",emoji:"🍈"},
+  {mr:"ग",word:"गाय",emoji:"🐄"},{mr:"घ",word:"घड्याळ",emoji:"⏰"},
+  {mr:"ङ",word:"",emoji:"🔤"},{mr:"च",word:"चमचा",emoji:"🥄"},
+  {mr:"छ",word:"छत्री",emoji:"☂️"},{mr:"ज",word:"जहाज",emoji:"🚢"},
+  {mr:"झ",word:"झाड",emoji:"🌳"},{mr:"ञ",word:"",emoji:"🔤"},
+  {mr:"ट",word:"टरबूज",emoji:"🍉"},{mr:"ठ",word:"ठिपका",emoji:"🔴"},
+  {mr:"ड",word:"डबा",emoji:"📦"},{mr:"ढ",word:"ढग",emoji:"☁️"},
+  {mr:"ण",word:"बाण",emoji:"🏹"},{mr:"त",word:"तारा",emoji:"⭐"},
+  {mr:"थ",word:"थाळी",emoji:"🍽️"},{mr:"द",word:"दिवा",emoji:"🪔"},
+  {mr:"ध",word:"धनुष्य",emoji:"🏹"},{mr:"न",word:"नाव",emoji:"⛵"},
+  {mr:"प",word:"पतंग",emoji:"🪁"},{mr:"फ",word:"फणस",emoji:"🍈"},
+  {mr:"ब",word:"बदक",emoji:"🦆"},{mr:"भ",word:"भोपळा",emoji:"🎃"},
+  {mr:"म",word:"मासा",emoji:"🐟"},{mr:"य",word:"यंत्र",emoji:"⚙️"},
+  {mr:"र",word:"रवि",emoji:"☀️"},{mr:"ल",word:"लाडू",emoji:"🍡"},
+  {mr:"व",word:"वाघ",emoji:"🐯"},{mr:"श",word:"शाळा",emoji:"🏫"},
+  {mr:"ष",word:"षटकोन",emoji:"⬡"},{mr:"स",word:"सफरचंद",emoji:"🍎"},
+  {mr:"ह",word:"हत्ती",emoji:"🐘"},{mr:"ळ",word:"वाळू",emoji:"🏖️"},
+  {mr:"क्ष",word:"क्षण",emoji:"⏱️"},{mr:"ज्ञ",word:"ज्ञान",emoji:"📚"},
+];
+
+const PAIRS = [
+  {id:"la-lla", title:"ल vs ळ", hint:"'ल' म्हणताना जिभेचं टोक पुढच्या दातांजवळ टेकतं. 'ळ' म्हणताना जिभेचं टोक टाळूकडे मागे वळतं — जरा जड आवाज.",
+    letters:[
+      {ch:"ल", items:[{w:"लाडू",e:"🍡",en:"Sweet ball"},{w:"लता",e:"🌿",en:"Vine"},{w:"मुलगा",e:"🧒",en:"Boy"}]},
+      {ch:"ळ", items:[{w:"माळ",e:"📿",en:"Garland"},{w:"बाळ",e:"👶",en:"Baby"},{w:"झोळी",e:"👜",en:"Sling bag"}]}
+    ]},
+  {id:"na-nna", title:"न vs ण", hint:"'न' मध्ये जीभ पुढच्या दातांजवळ असते. 'ण' मध्ये जिभेचं टोक टाळूला मागे स्पर्श करतं.",
+    letters:[
+      {ch:"न", items:[{w:"नदी",e:"🏞️",en:"River"},{w:"नाक",e:"👃",en:"Nose"},{w:"पान",e:"🍃",en:"Leaf"}]},
+      {ch:"ण", items:[{w:"बाण",e:"🏹",en:"Arrow"},{w:"हरण",e:"🦌",en:"Deer"},{w:"गणपती",e:"🐘",en:"Ganpati"}]}
+    ]},
+  {id:"sa-sha-sha", title:"स vs श vs ष", hint:"'स' दातांतून सुटतो, 'श' टाळूतून हलकी हवा सोडून, 'ष' जिभेचं टोक वळवून उच्चारला जातो.",
+    letters:[
+      {ch:"स", items:[{w:"सफरचंद",e:"🍎",en:"Apple"},{w:"ससा",e:"🐰",en:"Rabbit"},{w:"हसणे",e:"😄",en:"Laughing"}]},
+      {ch:"श", items:[{w:"शाळा",e:"🏫",en:"School"},{w:"शेळी",e:"🐐",en:"Goat"},{w:"आकाश",e:"🌌",en:"Sky"}]},
+      {ch:"ष", items:[{w:"षटकोन",e:"⬡",en:"Hexagon"},{w:"कृष्ण",e:"🦚",en:"Krishna"},{w:"निषेध",e:"🚫",en:"Protest"}]}
+    ]},
+  {id:"ta-tta", title:"त vs ट", hint:"'त' दातांजवळ (दंत्य) उच्चारला जातो. 'ट' टाळूजवळ (मूर्धन्य) उच्चारला जातो.",
+    letters:[
+      {ch:"त", items:[{w:"तारा",e:"⭐",en:"Star"},{w:"तळे",e:"💧",en:"Pond"},{w:"हात",e:"✋",en:"Hand"}]},
+      {ch:"ट", items:[{w:"टरबूज",e:"🍉",en:"Watermelon"},{w:"टोपी",e:"🧢",en:"Cap"},{w:"बूट",e:"👟",en:"Shoes"}]}
+    ]},
+  {id:"da-dda", title:"द vs ड", hint:"'द' दातांजवळ उच्चारला जातो. 'ड' टाळूजवळ, जरा टोकदार आवाजात उच्चारला जातो.",
+    letters:[
+      {ch:"द", items:[{w:"दूध",e:"🥛",en:"Milk"},{w:"दार",e:"🚪",en:"Door"},{w:"दिवा",e:"🪔",en:"Lamp"}]},
+      {ch:"ड", items:[{w:"डबा",e:"📦",en:"Box"},{w:"डोळा",e:"👁️",en:"Eye"},{w:"झाड",e:"🌳",en:"Tree"}]}
+    ]},
+  {id:"ra-rra", title:"र vs ऱ", hint:"'ऱ' हा जरा जड, जिभेचं टोक थरथरवणारा उच्चार आहे — बोलीभाषेत क्वचित आढळतो.",
+    letters:[
+      {ch:"र", items:[{w:"रवि",e:"☀️",en:"Sun (name)"},{w:"राजा",e:"👑",en:"King"},{w:"घर",e:"🏠",en:"House"}]},
+      {ch:"ऱ", items:[{w:"हरळी",e:"🌾",en:"Grass type"},{w:"पोऱ्या",e:"👦",en:"Boy (informal)"}]}
+    ]},
+  {id:"ka-kha", title:"क vs ख", hint:"'ख' म्हणताना 'क' पेक्षा जास्त हवा (श्वास) बाहेर सोडली जाते.",
+    letters:[
+      {ch:"क", items:[{w:"कमळ",e:"🪷",en:"Lotus"},{w:"केळ",e:"🍌",en:"Banana"},{w:"नाक",e:"👃",en:"Nose"}]},
+      {ch:"ख", items:[{w:"खरबूज",e:"🍈",en:"Melon"},{w:"खडू",e:"🖍️",en:"Chalk"},{w:"मुख",e:"👄",en:"Face"}]}
+    ]},
+  {id:"ga-gha", title:"ग vs घ", hint:"'घ' म्हणताना 'ग' पेक्षा जास्त हवा बाहेर सोडली जाते — जड आवाज.",
+    letters:[
+      {ch:"ग", items:[{w:"गाय",e:"🐄",en:"Cow"},{w:"गणपती",e:"🐘",en:"Ganpati"},{w:"बाग",e:"🌷",en:"Garden"}]},
+      {ch:"घ", items:[{w:"घर",e:"🏠",en:"House"},{w:"घड्याळ",e:"⏰",en:"Clock"},{w:"मेघ",e:"☁️",en:"Cloud"}]}
+    ]},
+  {id:"cha-chha", title:"च vs छ", hint:"'छ' म्हणताना 'च' पेक्षा जास्त हवा बाहेर सोडली जाते.",
+    letters:[
+      {ch:"च", items:[{w:"चमचा",e:"🥄",en:"Spoon"},{w:"चंद्र",e:"🌙",en:"Moon"},{w:"कच्चा",e:"🥚",en:"Raw"}]},
+      {ch:"छ", items:[{w:"छत्री",e:"☂️",en:"Umbrella"},{w:"छान",e:"👍",en:"Nice"},{w:"छडी",e:"📏",en:"Stick"}]}
+    ]},
+  {id:"ja-jha", title:"ज vs झ", hint:"'झ' म्हणताना 'ज' पेक्षा जास्त हवा बाहेर सोडली जाते — आवाज जड वाटतो.",
+    letters:[
+      {ch:"ज", items:[{w:"जहाज",e:"🚢",en:"Ship"},{w:"जमीन",e:"🌍",en:"Land"},{w:"राजा",e:"👑",en:"King"}]},
+      {ch:"झ", items:[{w:"झाड",e:"🌳",en:"Tree"},{w:"झोपाळा",e:"🎠",en:"Swing"},{w:"माझा",e:"🙋",en:"My/mine"}]}
+    ]},
+];
+
+const CATEGORIES = [
+  {id:"family",label:"कुटुंब",icon:"👨‍👩‍👧",items:[
+    {w:"आई",e:"👩",en:"Mother"},{w:"बाबा",e:"👨",en:"Father"},{w:"आजी",e:"👵",en:"Grandmother"},
+    {w:"आजोबा",e:"👴",en:"Grandfather"},{w:"भाऊ",e:"👦",en:"Brother"},{w:"बहीण",e:"👧",en:"Sister"},
+    {w:"बाळ",e:"👶",en:"Baby"},{w:"मुलगा",e:"🧒",en:"Boy"}]},
+  {id:"animals",label:"प्राणी",icon:"🐶",items:[
+    {w:"कुत्रा",e:"🐶",en:"Dog"},{w:"मांजर",e:"🐱",en:"Cat"},{w:"हत्ती",e:"🐘",en:"Elephant"},
+    {w:"वाघ",e:"🐯",en:"Tiger"},{w:"ससा",e:"🐰",en:"Rabbit"},{w:"गाय",e:"🐄",en:"Cow"},
+    {w:"पोपट",e:"🦜",en:"Parrot"},{w:"मासा",e:"🐟",en:"Fish"}]},
+  {id:"food",label:"अन्न",icon:"🍎",items:[
+    {w:"पाणी",e:"💧",en:"Water"},{w:"दूध",e:"🥛",en:"Milk"},{w:"भात",e:"🍚",en:"Rice"},
+    {w:"पोळी",e:"🫓",en:"Flatbread"},{w:"फळ",e:"🍎",en:"Fruit"},{w:"लाडू",e:"🍡",en:"Sweet ball"},
+    {w:"केळ",e:"🍌",en:"Banana"},{w:"आंबा",e:"🥭",en:"Mango"}]},
+  {id:"home",label:"घर",icon:"🏠",items:[
+    {w:"घर",e:"🏠",en:"House"},{w:"दार",e:"🚪",en:"Door"},{w:"खिडकी",e:"🪟",en:"Window"},
+    {w:"खुर्ची",e:"🪑",en:"Chair"},{w:"पलंग",e:"🛏️",en:"Bed"},{w:"दिवा",e:"🪔",en:"Lamp"},
+    {w:"चावी",e:"🔑",en:"Key"},{w:"आरसा",e:"🪞",en:"Mirror"}]},
+  {id:"nature",label:"निसर्ग",icon:"🌳",items:[
+    {w:"सूर्य",e:"☀️",en:"Sun"},{w:"चंद्र",e:"🌙",en:"Moon"},{w:"तारा",e:"⭐",en:"Star"},
+    {w:"झाड",e:"🌳",en:"Tree"},{w:"फूल",e:"🌸",en:"Flower"},{w:"नदी",e:"🏞️",en:"River"},
+    {w:"पाऊस",e:"🌧️",en:"Rain"},{w:"ढग",e:"☁️",en:"Cloud"}]},
+  {id:"colors",label:"रंग",icon:"🎨",items:[
+    {w:"लाल",e:"🔴",en:"Red"},{w:"पिवळा",e:"🟡",en:"Yellow"},{w:"निळा",e:"🔵",en:"Blue"},
+    {w:"हिरवा",e:"🟢",en:"Green"},{w:"नारंगी",e:"🟠",en:"Orange"},{w:"गुलाबी",e:"💗",en:"Pink"},
+    {w:"जांभळा",e:"🟣",en:"Purple"},{w:"पांढरा",e:"⚪",en:"White"},{w:"काळा",e:"⚫",en:"Black"},{w:"तपकिरी",e:"🟤",en:"Brown"}]},
+  {id:"numbers",label:"अंक",icon:"🔢",items:[
+    {w:"एक",e:"1️⃣",en:"One"},{w:"दोन",e:"2️⃣",en:"Two"},{w:"तीन",e:"3️⃣",en:"Three"},
+    {w:"चार",e:"4️⃣",en:"Four"},{w:"पाच",e:"5️⃣",en:"Five"},{w:"सहा",e:"6️⃣",en:"Six"},
+    {w:"सात",e:"7️⃣",en:"Seven"},{w:"आठ",e:"8️⃣",en:"Eight"},{w:"नऊ",e:"9️⃣",en:"Nine"},{w:"दहा",e:"🔟",en:"Ten"}]},
+  {id:"clothes",label:"कपडे",icon:"👕",items:[
+    {w:"शर्ट",e:"👕",en:"Shirt"},{w:"पँट",e:"👖",en:"Pants"},{w:"टोपी",e:"🧢",en:"Cap"},
+    {w:"बूट",e:"👟",en:"Shoes"},{w:"फ्रॉक",e:"👗",en:"Frock"},{w:"मोजे",e:"🧦",en:"Socks"},
+    {w:"स्वेटर",e:"🧥",en:"Sweater"}]},
+  {id:"vehicles",label:"वाहने",icon:"🚗",items:[
+    {w:"गाडी",e:"🚗",en:"Car"},{w:"बस",e:"🚌",en:"Bus"},{w:"सायकल",e:"🚲",en:"Bicycle"},
+    {w:"विमान",e:"✈️",en:"Plane"},{w:"रेल्वे",e:"🚆",en:"Train"},{w:"नाव",e:"⛵",en:"Boat"},
+    {w:"ट्रक",e:"🚚",en:"Truck"}]},
+  {id:"school",label:"शाळा",icon:"🏫",items:[
+    {w:"शाळा",e:"🏫",en:"School"},{w:"पुस्तक",e:"📖",en:"Book"},{w:"वही",e:"📓",en:"Notebook"},
+    {w:"पेन्सिल",e:"✏️",en:"Pencil"},{w:"दप्तर",e:"🎒",en:"Bag"},{w:"फळा",e:"⬛",en:"Blackboard"},
+    {w:"शिक्षक",e:"🧑‍🏫",en:"Teacher"}]},
+  {id:"greetings",label:"अभिवादन",icon:"👋",items:[
+    {w:"नमस्कार",e:"👋",en:"Hello"},{w:"धन्यवाद",e:"🙏",en:"Thank you"},{w:"माफ करा",e:"😔",en:"Sorry"},
+    {w:"शुभ रात्री",e:"🌙",en:"Good night"},{w:"शुभ सकाळ",e:"🌅",en:"Good morning"},
+    {w:"हो",e:"✅",en:"Yes"},{w:"नाही",e:"❌",en:"No"}]},
+  {id:"toys",label:"खेळणी",icon:"🧸",items:[
+    {w:"चेंडू",e:"⚽",en:"Ball"},{w:"बाहुली",e:"🪆",en:"Doll"},{w:"पतंग",e:"🪁",en:"Kite"},
+    {w:"फुगा",e:"🎈",en:"Balloon"},{w:"ब्लॉक्स",e:"🧱",en:"Blocks"},{w:"टेडी",e:"🧸",en:"Teddy bear"},{w:"पझल",e:"🧩",en:"Puzzle"}]},
+];
+
+const SONGS = [
+  {title:"रंगांचं गाणं", lines:["लाल लाल फूल", "पिवळं पिवळं ऊन", "निळं निळं आभाळ", "हिरवं हिरवं रान"]},
+  {title:"मोजूया चला", lines:["एक दोन तीन", "चार पाच सहा", "सात आठ नऊ", "दहा! शाब्बास बाळा"]},
+  {title:"प्राण्यांचं गाणं", lines:["वाघ बोलतो गुरगुर", "हत्ती बोलतो चिंत्कार", "कुत्रा बोलतो भुंभुं", "मांजर बोलते म्यांव"]}
+];
+
+const BADGES = [
+  {id:"first-word",icon:"⭐",label:"पहिला शब्द",cond:()=>wordsLearnedSet.size>=1},
+  {id:"ten-words",icon:"🌟",label:"१० शब्द",cond:()=>wordsLearnedSet.size>=10},
+  {id:"many-words",icon:"🏅",label:"२५ शब्द",cond:()=>wordsLearnedSet.size>=25},
+  {id:"first-pair",icon:"🎯",label:"पहिली जोडी",cond:()=>masteredPairs.size>=1},
+  {id:"five-pairs",icon:"🏆",label:"५ जोड्या",cond:()=>masteredPairs.size>=5},
+  {id:"all-pairs",icon:"👑",label:"सर्व जोड्या",cond:()=>masteredPairs.size>=PAIRS.length},
+  {id:"quiz-done",icon:"📜",label:"क्विझ पूर्ण",cond:()=>quizzesCompleted>=1},
+  {id:"game-player",icon:"🎮",label:"खेळाडू",cond:()=>gamesPlayed>=3},
+  {id:"practice-pro",icon:"🔊",label:"सराव तज्ज्ञ",cond:()=>practiceCount>=30},
+];
+
+/* ================= PROGRESS STATE (session only) ================= */
+let wordsLearnedSet = new Set();
+let masteredPairs = new Set();
+let practiceCount = 0;
+let quizzesCompleted = 0;
+let gamesPlayed = 0;
+let unlockedBadges = new Set();
+
+function trackPractice(){ practiceCount++; checkBadges(); updateStarPill(); }
+function trackWordLearned(w){ wordsLearnedSet.add(w); checkBadges(); updateStarPill(); }
+function updateStarPill(){
+  document.getElementById('starCount').textContent = wordsLearnedSet.size;
+}
+function checkBadges(){
+  BADGES.forEach(b=>{
+    if(!unlockedBadges.has(b.id) && b.cond()){
+      unlockedBadges.add(b.id);
+      showToast('🎉 नवीन बॅज: ' + b.label);
+    }
+  });
+  if(state.tab === 'progress') render();
+}
+function showToast(text){
+  const t = document.getElementById('toast');
+  t.textContent = text;
+  t.classList.add('show');
+  clearTimeout(showToast._tm);
+  showToast._tm = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+/* ================= UTILS ================= */
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function sample(arr,n){ return shuffle(arr).slice(0,n); }
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function highlightHTML(word, letter){
+  if(!letter || word.indexOf(letter) === -1) return word;
+  return word.split(letter).join('<span class="hl">'+letter+'</span>');
+}
+function el(tag, className, html){
+  const e = document.createElement(tag);
+  if(className) e.className = className;
+  if(html !== undefined) e.innerHTML = html;
+  return e;
+}
+
+/* ================= SPEECH ENGINE ================= */
+const SPEECH_RATE = 0.68;
+const SLOW_RATE = 0.45;
+const PAUSE_MS = 550;
+let voiceList = [];
+let selectedVoiceURI = '';
+
+function scoreVoice(v){
+  const lang = (v.lang||'').toLowerCase();
+  if(lang === 'mr-in') return 0;
+  if(lang.startsWith('mr')) return 1;
+  if(lang === 'hi-in') return 2;
+  if(lang.startsWith('hi')) return 3;
+  return 9;
+}
+function sortedVoices(){ return [...voiceList].sort((a,b)=>scoreVoice(a)-scoreVoice(b)); }
+function getActiveVoice(){
+  if(selectedVoiceURI){
+    const v = voiceList.find(v=>v.voiceURI === selectedVoiceURI);
+    if(v) return v;
+  }
+  const s = sortedVoices();
+  return s.length ? s[0] : null;
+}
+function populateVoiceSelect(){
+  const sel = document.getElementById('voiceSelect');
+  if(!sel) return;
+  const prev = sel.value;
+  sel.innerHTML = '';
+  const autoOpt = document.createElement('option');
+  autoOpt.value = '';
+  autoOpt.textContent = voiceList.length ? 'आपोआप (सर्वोत्तम आवाज)' : 'आवाज सापडत नाहीत';
+  sel.appendChild(autoOpt);
+  sortedVoices().forEach(v=>{
+    const opt = document.createElement('option');
+    opt.value = v.voiceURI;
+    const tag = scoreVoice(v) <= 1 ? ' — मराठी' : (scoreVoice(v) <= 3 ? ' — हिंदी' : '');
+    opt.textContent = v.name + tag;
+    sel.appendChild(opt);
+  });
+  sel.value = selectedVoiceURI && voiceList.some(v=>v.voiceURI===selectedVoiceURI) ? selectedVoiceURI : (prev || '');
+}
+function loadVoices(){
+  voiceList = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+  populateVoiceSelect();
+}
+if('speechSynthesis' in window){
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+  setTimeout(loadVoices, 400);
+  setTimeout(loadVoices, 1200);
+}
+document.getElementById('voiceSelect').addEventListener('change', (e)=>{
+  selectedVoiceURI = e.target.value;
+  speak('नमस्कार');
+});
+
+function speakParts(parts, opts){
+  opts = opts || {};
+  if(!('speechSynthesis' in window)) { if(opts.onDone) opts.onDone(); return; }
+  window.speechSynthesis.cancel();
+  const list = parts.filter(Boolean);
+  const voice = getActiveVoice();
+  const vol = parseFloat(document.getElementById('volume').value);
+  const rate = opts.rate || SPEECH_RATE;
+  let i = 0;
+  function playNext(){
+    if(i >= list.length){ if(opts.onDone) opts.onDone(); return; }
+    if(opts.onEachStart) opts.onEachStart(i);
+    const u = new SpeechSynthesisUtterance(list[i]);
+    if(voice) u.voice = voice;
+    u.lang = voice ? voice.lang : 'hi-IN';
+    u.rate = rate;
+    u.volume = vol;
+    u.onend = ()=>{
+      i++;
+      if(i < list.length) setTimeout(playNext, PAUSE_MS);
+      else if(opts.onDone) opts.onDone();
+    };
+    u.onerror = ()=>{ i++; playNext(); };
+    window.speechSynthesis.speak(u);
+  }
+  playNext();
+}
+function speak(text, opts){
+  const parts = Array.isArray(text) ? text : [text];
+  speakParts(parts, opts || {});
+}
+function bounceMascot(){
+  const m = document.getElementById('mascot');
+  m.style.animation = 'none';
+  requestAnimationFrame(()=>{ m.style.animation = ''; });
+}
+
+/* ================= APP STATE / NAV ================= */
+const TABS = [
+  {id:'home',icon:'🏠',label:'मुख्यपान'},
+  {id:'letters',icon:'🔤',label:'अक्षरे'},
+  {id:'words',icon:'🖼️',label:'शब्द'},
+  {id:'games',icon:'🎮',label:'खेळा'},
+  {id:'progress',icon:'🏆',label:'प्रगती'},
+];
+let state = {
+  tab:'home',
+  lettersView:'menu', activePair:null, browseSub:'swar',
+  wordsView:'categories', activeCategory:null,
+  gamesView:'menu', game:null,
+};
+
+function setTab(id){ state.tab=id; state.lettersView='menu'; state.wordsView='categories'; state.gamesView='menu'; render(); }
+
+function renderTabs(){
+  const nav = document.getElementById('tabs');
+  nav.innerHTML='';
+  TABS.forEach(t=>{
+    const b = el('button','tab-btn'+(state.tab===t.id?' active':''), '<span class="ic">'+t.icon+'</span>'+t.label);
+    b.onclick = ()=>setTab(t.id);
+    nav.appendChild(b);
+  });
+}
+document.getElementById('starPill').onclick = ()=>setTab('progress');
+
+function render(){
+  renderTabs();
+  const main = document.getElementById('view');
+  main.innerHTML='';
+  if(state.tab==='home') renderHome(main);
+  else if(state.tab==='letters') renderLetters(main);
+  else if(state.tab==='words') renderWords(main);
+  else if(state.tab==='games') renderGames(main);
+  else if(state.tab==='progress') renderProgress(main);
+}
+
+/* ================= HOME ================= */
+function renderHome(main){
+  const block = el('div','card-block');
+  block.appendChild(el('div','section-label','आजची शिकण्याची वाट'));
+  block.appendChild(el('div','path-row',
+    'अक्षरे <span class="arrow">→</span> शब्द <span class="arrow">→</span> ऐका <span class="arrow">→</span> बोला <span class="arrow">→</span> ओळखा <span class="arrow">→</span> खेळा <span class="arrow">→</span> क्विझ'));
+  const cta = el('button','cta-btn','अक्षरे शिकायला सुरुवात करूया 🚀');
+  cta.onclick = ()=>setTab('letters');
+  block.appendChild(cta);
+  const stats = el('div','stat-row');
+  stats.appendChild(statChip(wordsLearnedSet.size,'शब्द शिकले'));
+  stats.appendChild(statChip(masteredPairs.size,'अक्षरे पारंगत'));
+  stats.appendChild(statChip(unlockedBadges.size,'बॅज मिळाले'));
+  block.appendChild(stats);
+  main.appendChild(block);
+
+  const info = el('div','card-block');
+  info.appendChild(el('div','section-label','मिठू सांगतो'));
+  info.innerHTML += '<div style="font-size:13px;line-height:1.6;color:#6b5c4e;">या अ‍ॅपमध्ये गोंधळणारी अक्षरं (जसं ल आणि ळ) स्पष्ट फरकाने शिकवली आहेत, चित्रांसह शब्द आहेत आणि कान तयार करणारे खेळ आहेत. खालच्या पट्टीतून आवाज आणि आवाजाचा वेग बदलता येतो.</div>';
+  main.appendChild(info);
+}
+function statChip(n,l){
+  const c = el('div','stat-chip');
+  c.appendChild(el('div','n',String(n)));
+  c.appendChild(el('div','l',l));
+  return c;
+}
+
+/* ================= LETTERS TAB ================= */
+function renderLetters(main){
+  if(state.lettersView === 'pair'){ renderPairLab(main); return; }
+  if(state.lettersView === 'browse'){ renderBrowseAlphabet(main); return; }
+
+  main.appendChild(el('div','section-label','गोंधळणारी अक्षरे — इथून सुरुवात करा'));
+  PAIRS.forEach(p=>{
+    const card = el('button','pair-card');
+    const lettersWrap = el('div','pair-letters');
+    p.letters.forEach(l=> lettersWrap.appendChild(el('div','pl', l.ch)) );
+    card.appendChild(lettersWrap);
+    const info = el('div','pair-info');
+    info.appendChild(el('div','t', p.title));
+    info.appendChild(el('div','s', p.letters.length + ' अक्षरं, उदाहरण शब्दांसह सराव'));
+    card.appendChild(info);
+    card.appendChild(el('div','pair-badge', masteredPairs.has(p.id) ? '✅' : '▶️'));
+    card.onclick = ()=>{ state.activePair = p.id; state.lettersView='pair'; render(); };
+    main.appendChild(card);
+  });
+
+  const browseBtn = el('button','cta-btn','सर्व स्वर व व्यंजन बघा 🔡');
+  browseBtn.style.background = 'var(--teal)';
+  browseBtn.onclick = ()=>{ state.lettersView='browse'; render(); };
+  main.appendChild(browseBtn);
+}
+
+function renderPairLab(main){
+  const pair = PAIRS.find(p=>p.id===state.activePair);
+  const back = el('button','back-btn','← अक्षरांकडे परत');
+  back.onclick = ()=>{ state.lettersView='menu'; render(); };
+  main.appendChild(back);
+
+  main.appendChild(el('div','section-label', pair.title + ' — प्रयोगशाळा'));
+  main.appendChild(el('div','hint-box', '👂 ' + pair.hint));
+
+  pair.letters.forEach(letterObj=>{
+    const block = el('div','letter-block');
+    const head = el('div','letter-head');
+    const bigBtn = el('button','big-letter-btn', letterObj.ch);
+    bigBtn.onclick = ()=>{ speak(letterObj.ch); trackPractice(); bounceMascot(); };
+    head.appendChild(bigBtn);
+    const bkRow = el('div','baraakhadi-row');
+    ['ा','ी','ु','े','ो'].forEach(matra=>{
+      const chip = el('button','baraakhadi-chip', letterObj.ch+matra);
+      chip.onclick = ()=>{ speak(letterObj.ch+matra); trackPractice(); };
+      bkRow.appendChild(chip);
+    });
+    head.appendChild(bkRow);
+    block.appendChild(head);
+    block.appendChild(el('div','say-caption','🎙️ आता तू म्हण: ' + letterObj.ch));
+
+    const grid = el('div','grid3');
+    grid.style.marginTop = '10px';
+    letterObj.items.forEach(item=>{
+      grid.appendChild(makeWordCard(item, letterObj.ch));
+    });
+    block.appendChild(grid);
+    main.appendChild(block);
+  });
+
+  main.appendChild(el('div','section-label','🎧 कोणता आवाज ऐकलात?'));
+  const gameBox = el('div','card-block');
+  main.appendChild(gameBox);
+  runPairListenGame(pair, gameBox);
+}
+
+function makeWordCard(item, highlightLetter){
+  const card = el('div','wcard');
+  card.appendChild(el('div','emoji', item.e));
+  card.appendChild(el('div','word', highlightHTML(item.w, highlightLetter)));
+  if(item.en) card.appendChild(el('div','en', item.en));
+  const btnrow = el('div','btnrow');
+  const hearBtn = el('button','sbtn','🔊');
+  hearBtn.onclick = ()=>{ speak(item.w); trackPractice(); trackWordLearned(item.w); };
+  const slowBtn = el('button','sbtn','🐢');
+  slowBtn.onclick = ()=>{ speak(item.w,{rate:SLOW_RATE}); trackPractice(); trackWordLearned(item.w); };
+  btnrow.appendChild(hearBtn); btnrow.appendChild(slowBtn);
+  card.appendChild(btnrow);
+  return card;
+}
+
+let pairGameStreak = 0;
+function runPairListenGame(pair, container){
+  pairGameStreak = 0;
+  playPairRound(pair, container);
+}
+function playPairRound(pair, container){
+  container.innerHTML='';
+  const pool = [];
+  pair.letters.forEach(l=> l.items.forEach(it=> pool.push({ch:l.ch, item:it})) );
+  const target = pick(pool);
+  const promptBox = el('div','prompt-box');
+  promptBox.appendChild(el('div','prompt-sub','ऐका, आणि योग्य अक्षर निवडा'));
+  const replay = el('button','replay-round-btn','🔊 पुन्हा ऐका');
+  replay.onclick = ()=>speak(target.item.w);
+  promptBox.appendChild(replay);
+  container.appendChild(promptBox);
+
+  const optRow = el('div','mcq-row');
+  const options = shuffle(pair.letters.map(l=>l.ch));
+  options.forEach(ch=>{
+    const b = el('button','mcq-btn', ch);
+    b.onclick = ()=>{
+      const correct = ch === target.ch;
+      b.classList.add(correct?'correct':'wrong');
+      optRow.querySelectorAll('.mcq-btn').forEach(x=>x.disabled=true);
+      if(!correct){
+        const rightBtn = [...optRow.querySelectorAll('.mcq-btn')].find(x=>x.textContent===target.ch);
+        if(rightBtn) rightBtn.classList.add('correct');
+        pairGameStreak = 0;
+      } else {
+        pairGameStreak++;
+        if(pairGameStreak>=3 && !masteredPairs.has(pair.id)){
+          masteredPairs.add(pair.id);
+          checkBadges();
+          showToast('🏆 ' + pair.title + ' मध्ये पारंगत!');
+        }
+      }
+      trackPractice();
+      setTimeout(()=>playPairRound(pair, container), 1100);
+    };
+    optRow.appendChild(b);
+  });
+  container.appendChild(optRow);
+  speak(target.item.w);
+}
+
+function renderBrowseAlphabet(main){
+  const back = el('button','back-btn','← अक्षरांकडे परत');
+  back.onclick = ()=>{ state.lettersView='menu'; render(); };
+  main.appendChild(back);
+
+  const subtabs = el('div','subtabs');
+  ['swar','vyanjan'].forEach(key=>{
+    const b = el('button','subtab-btn'+(state.browseSub===key?' active':''), key==='swar'?'स्वर':'व्यंजन');
+    b.onclick = ()=>{ state.browseSub=key; render(); };
+    subtabs.appendChild(b);
+  });
+  main.appendChild(subtabs);
+
+  const list = state.browseSub==='swar' ? VOWELS : CONSONANTS;
+  const grid = el('div','grid4');
+  list.forEach(item=>{
+    const tile = el('button','tile');
+    tile.appendChild(el('div','emoji', item.emoji));
+    tile.appendChild(el('div','letter', item.mr));
+    if(item.word) tile.appendChild(el('div','en', item.word));
+    tile.onclick = ()=>{
+      tile.classList.add('playing');
+      setTimeout(()=>tile.classList.remove('playing'),500);
+      speak(item.word ? [item.mr, item.word] : item.mr);
+      trackPractice();
+    };
+    grid.appendChild(tile);
+  });
+  main.appendChild(grid);
+}
+
+/* ================= WORDS TAB ================= */
+function renderWords(main){
+  if(state.wordsView === 'category'){ renderCategoryWords(main); return; }
+  main.appendChild(el('div','section-label','चित्रांसह शब्द शिका — एक विभाग निवडा'));
+  const grid = el('div','grid3');
+  CATEGORIES.forEach(cat=>{
+    const c = el('button','cat-card');
+    c.appendChild(el('div','ic', cat.icon));
+    c.appendChild(el('div','lb', cat.label));
+    c.onclick = ()=>{ state.activeCategory = cat.id; state.wordsView='category'; render(); };
+    grid.appendChild(c);
+  });
+  main.appendChild(grid);
+}
+function renderCategoryWords(main){
+  const cat = CATEGORIES.find(c=>c.id===state.activeCategory);
+  const back = el('button','back-btn','← विभागांकडे परत');
+  back.onclick = ()=>{ state.wordsView='categories'; render(); };
+  main.appendChild(back);
+  main.appendChild(el('div','section-label', cat.icon + ' ' + cat.label));
+  const grid = el('div','grid3');
+  cat.items.forEach(item=>{
+    grid.appendChild(makeWordCard(item, null));
+  });
+  main.appendChild(grid);
+}
+
+/* ================= GAMES TAB ================= */
+const GAME_LIST = [
+  {id:'find', icon:'🎯', title:'अक्षर शोधा', desc:'सांगितलेलं बरोबर अक्षर निवडा'},
+  {id:'hear', icon:'🔊', title:'कोणता शब्द ऐकलात?', desc:'ऐका आणि योग्य शब्द ओळखा'},
+  {id:'match', icon:'🧩', title:'जोड्या जुळवा', desc:'चित्र आणि शब्दाची जोडी लावा'},
+  {id:'pop', icon:'🎈', title:'अक्षर फोडा', desc:'योग्य अक्षरं टॅप करून फोडा'},
+  {id:'quiz', icon:'🏁', title:'क्विझ', desc:'सर्व कौशल्यांची मिश्र परीक्षा'},
+  {id:'songs', icon:'🎵', title:'गाणी ऐका', desc:'सोपी मराठी गाणी ऐका'},
+];
+function renderGames(main){
+  if(state.gamesView !== 'menu'){ renderGameScreen(main, state.gamesView); return; }
+  main.appendChild(el('div','section-label','खेळ निवडा'));
+  GAME_LIST.forEach(g=>{
+    const card = el('button','game-card');
+    card.appendChild(el('div','ic', g.icon));
+    const info = el('div','');
+    info.appendChild(el('div','t', g.title));
+    info.appendChild(el('div','s', g.desc));
+    card.appendChild(info);
+    card.onclick = ()=>{ state.gamesView = g.id; render(); };
+    main.appendChild(card);
+  });
+}
+function renderGameScreen(main, gameId){
+  const back = el('button','back-btn','← खेळांकडे परत');
+  back.onclick = ()=>{ state.gamesView='menu'; render(); };
+  main.appendChild(back);
+  const box = el('div','card-block');
+  main.appendChild(box);
+  if(gameId==='find') startFindLetterGame(box);
+  else if(gameId==='hear') startHearWordGame(box);
+  else if(gameId==='match') startMatchGame(box);
+  else if(gameId==='pop') startPopGame(box);
+  else if(gameId==='quiz') startQuizGame(box);
+  else if(gameId==='songs') renderSongs(box);
+}
+function roundProgressHTML(current,total){
+  const wrap = el('div','round-progress');
+  for(let i=0;i<total;i++){
+    wrap.appendChild(el('div','round-dot'+(i<current?' done':(i===current?' now':''))));
+  }
+  return wrap;
+}
+function endScreen(container, big, msg, onReplay){
+  container.innerHTML='';
+  const box = el('div','end-box');
+  box.appendChild(el('div','big', big));
+  box.appendChild(el('div','msg', msg));
+  const replay = el('button','ghost-btn','🔁 पुन्हा खेळा');
+  replay.onclick = onReplay;
+  const back = el('button','ghost-btn','🏠 मेनूकडे परत');
+  back.onclick = ()=>{ state.gamesView='menu'; render(); };
+  box.appendChild(replay); box.appendChild(back);
+  container.appendChild(box);
+  gamesPlayed++; checkBadges();
+}
+
+/* Game 1: Find the Letter */
+function startFindLetterGame(container){
+  const total = 6; let round=0, score=0;
+  function next(){
+    if(round>=total){ endScreen(container,'🎯 '+score+'/'+total,'अक्षरं शोधण्याचा सराव झाला!',()=>startFindLetterGame(container)); return; }
+    container.innerHTML='';
+    container.appendChild(roundProgressHTML(round,total));
+    const pair = pick(PAIRS);
+    const targetCh = pick(pair.letters).ch;
+    const otherPairLetters = pair.letters.map(l=>l.ch).filter(c=>c!==targetCh);
+    let distractors = shuffle(otherPairLetters);
+    const otherPairsLetters = PAIRS.filter(p=>p.id!==pair.id).flatMap(p=>p.letters.map(l=>l.ch));
+    while(distractors.length < 3){
+      const extra = pick(otherPairsLetters);
+      if(extra!==targetCh && !distractors.includes(extra)) distractors.push(extra);
+    }
+    const options = shuffle([targetCh, ...distractors.slice(0,3)]);
+    const promptBox = el('div','prompt-box');
+    promptBox.appendChild(el('div','prompt-sub','हे अक्षर शोधा:'));
+    promptBox.appendChild(el('div','prompt-big', targetCh));
+    container.appendChild(promptBox);
+    speak(targetCh);
+    const optRow = el('div','mcq-row');
+    options.forEach(ch=>{
+      const b = el('button','mcq-btn', ch);
+      b.onclick = ()=>{
+        const correct = ch===targetCh;
+        b.classList.add(correct?'correct':'wrong');
+        optRow.querySelectorAll('.mcq-btn').forEach(x=>x.disabled=true);
+        if(correct) score++;
+        else { const rb=[...optRow.querySelectorAll('.mcq-btn')].find(x=>x.textContent===targetCh); if(rb) rb.classList.add('correct'); }
+        trackPractice();
+        round++;
+        setTimeout(next, 1000);
+      };
+      optRow.appendChild(b);
+    });
+    container.appendChild(optRow);
+  }
+  next();
+}
+
+/* Game 2: Which word did you hear */
+function startHearWordGame(container){
+  const total = 6; let round=0, score=0;
+  function next(){
+    if(round>=total){ endScreen(container,'🔊 '+score+'/'+total,'शब्द ऐकण्याचा सराव छान झाला!',()=>startHearWordGame(container)); return; }
+    container.innerHTML='';
+    container.appendChild(roundProgressHTML(round,total));
+    const pair = pick(PAIRS);
+    const pool = pair.letters.flatMap(l=>l.items.map(it=>({ch:l.ch,item:it})));
+    const target = pick(pool);
+    let distractors = shuffle(pool.filter(p=>p.item.w!==target.item.w)).slice(0,2);
+    const options = shuffle([target, ...distractors]);
+    const promptBox = el('div','prompt-box');
+    promptBox.appendChild(el('div','prompt-sub','ऐका, आणि योग्य शब्द निवडा'));
+    const replay = el('button','replay-round-btn','🔊 पुन्हा ऐका');
+    replay.onclick = ()=>speak(target.item.w);
+    promptBox.appendChild(replay);
+    container.appendChild(promptBox);
+    speak(target.item.w);
+    const optCol = el('div','mcq-options');
+    options.forEach(opt=>{
+      const b = el('button','mcq-btn', opt.item.w);
+      b.onclick = ()=>{
+        const correct = opt.item.w===target.item.w;
+        b.classList.add(correct?'correct':'wrong');
+        optCol.querySelectorAll('.mcq-btn').forEach(x=>x.disabled=true);
+        if(correct) score++;
+        else { const rb=[...optCol.querySelectorAll('.mcq-btn')].find(x=>x.textContent===target.item.w); if(rb) rb.classList.add('correct'); }
+        trackPractice();
+        round++;
+        setTimeout(next, 1200);
+      };
+      optCol.appendChild(b);
+    });
+    container.appendChild(optCol);
+  }
+  next();
+}
+
+/* Game 3: Match */
+function startMatchGame(container){
+  let selected = null; let matchedCount = 0;
+  function next(){
+    container.innerHTML='';
+    const cat = pick(CATEGORIES);
+    const items = sample(cat.items, Math.min(5, cat.items.length));
+    matchedCount = 0; selected = null;
+    container.appendChild(el('div','prompt-sub','जुळवा: ' + cat.icon + ' ' + cat.label));
+    const wrap = el('div','match-wrap');
+    const leftCol = el('div','match-col');
+    const rightCol = el('div','match-col');
+    const leftItems = shuffle(items);
+    const rightItems = shuffle(items);
+    leftItems.forEach(it=>{
+      const b = el('div','match-item', it.e);
+      b.dataset.key = it.w;
+      b.dataset.side = 'pic';
+      b.onclick = ()=>handlePick(b, it, leftCol, rightCol);
+      leftCol.appendChild(b);
+    });
+    rightItems.forEach(it=>{
+      const b = el('div','match-item', it.w);
+      b.dataset.key = it.w;
+      b.dataset.side = 'word';
+      b.onclick = ()=>handlePick(b, it, leftCol, rightCol);
+      rightCol.appendChild(b);
+    });
+    wrap.appendChild(leftCol); wrap.appendChild(rightCol);
+    container.appendChild(wrap);
+  }
+  function handlePick(btn, item, leftCol, rightCol){
+    if(btn.classList.contains('matched')) return;
+    if(!selected){
+      selected = {btn, item};
+      btn.classList.add('selected');
+      return;
+    }
+    if(selected.btn === btn) return;
+    if(selected.item.w === item.w && selected.btn.dataset.side !== btn.dataset.side){
+      selected.btn.classList.remove('selected');
+      selected.btn.classList.add('matched');
+      btn.classList.add('matched');
+      trackWordLearned(item.w);
+      trackPractice();
+      matchedCount++;
+      selected = null;
+      if(matchedCount >= leftCol.children.length){
+        setTimeout(()=>{
+          const box = el('div','end-box');
+          box.appendChild(el('div','big','🧩 छान जुळणी!'));
+          const nextBtn = el('button','ghost-btn','➡️ पुढील फेरी');
+          nextBtn.onclick = next;
+          const back = el('button','ghost-btn','🏠 मेनूकडे परत');
+          back.onclick = ()=>{ state.gamesView='menu'; gamesPlayed++; checkBadges(); render(); };
+          box.appendChild(nextBtn); box.appendChild(back);
+          container.appendChild(box);
+        }, 400);
+      }
+    } else {
+      const prevSelected = selected;
+      btn.classList.add('shake');
+      prevSelected.btn.classList.add('shake');
+      setTimeout(()=>{
+        btn.classList.remove('shake');
+        if(prevSelected && prevSelected.btn){
+          prevSelected.btn.classList.remove('shake');
+          prevSelected.btn.classList.remove('selected');
+        }
+        if(selected === prevSelected) selected = null;
+      }, 350);
+    }
+  }
+  next();
+}
+
+/* Game 4: Letter Pop */
+function startPopGame(container){
+  const pair = pick(PAIRS);
+  const target = pick(pair.letters).ch;
+  const others = pair.letters.map(l=>l.ch).filter(c=>c!==target);
+  let lives = 3, popped = 0, needed = 5;
+  function build(){
+    container.innerHTML='';
+    container.appendChild(el('div','prompt-sub','फोडा फक्त हे अक्षर: '));
+    container.appendChild(el('div','prompt-big', target));
+    container.appendChild((()=>{const l=el('div','lives-row'); for(let i=0;i<lives;i++) l.appendChild(document.createTextNode('❤️')); return l;})());
+    const field = el('div','pop-field');
+    const slots = [];
+    for(let r=0;r<2;r++) for(let c=0;c<5;c++) slots.push({top: 20+r*45+'%', left: 8+c*18+'%'});
+    const shuffledSlots = shuffle(slots);
+    const letters = [];
+    for(let i=0;i<needed;i++) letters.push(target);
+    for(let i=0;i<10-needed;i++) letters.push(pick(others));
+    shuffle(letters).forEach((ch,idx)=>{
+      const b = el('button','pop-letter', ch);
+      const slot = shuffledSlots[idx];
+      b.style.top = slot.top; b.style.left = slot.left;
+      b.style.animationDelay = (Math.random()*1.5)+'s';
+      b.onclick = ()=>{
+        if(b.classList.contains('pop-out')) return;
+        if(ch===target){
+          b.classList.add('pop-out');
+          popped++;
+          trackPractice();
+          if(popped>=needed){
+            setTimeout(()=>endScreen(container,'🎈 जिंकलं!','सर्व '+target+' अक्षरं फोडली!',()=>startPopGame(container)),400);
+          }
+        } else {
+          b.classList.add('miss');
+          lives--;
+          speak(ch);
+          if(lives<=0){
+            setTimeout(()=>endScreen(container,'💧 पुन्हा प्रयत्न करूया','थोडं अजून सराव करूया!',()=>startPopGame(container)),400);
+          } else {
+            setTimeout(()=>b.classList.remove('miss'),300);
+          }
+        }
+      };
+      field.appendChild(b);
+    });
+    container.appendChild(field);
+  }
+  build();
+}
+
+/* Game 5: Quiz */
+function startQuizGame(container){
+  const total = 8; let round=0, score=0;
+  function makeQuestion(){
+    const type = pick(['pic','meaning','sound']);
+    if(type==='pic'){
+      const cat = pick(CATEGORIES);
+      const target = pick(cat.items);
+      const distractors = sample(cat.items.filter(i=>i.w!==target.w), Math.min(2,cat.items.length-1));
+      return {
+        render:(box)=>{
+          box.appendChild(el('div','prompt-sub','हे चित्र कोणत्या शब्दाचं आहे?'));
+          box.appendChild(el('div','prompt-big', target.e));
+          const optCol = el('div','mcq-options');
+          shuffle([target,...distractors]).forEach(opt=>{
+            const b = el('button','mcq-btn', opt.w);
+            attachMCQ(b, opt.w===target.w, optCol, target.w);
+            optCol.appendChild(b);
+          });
+          box.appendChild(optCol);
+        }
+      };
+    } else if(type==='meaning'){
+      const cat = pick(CATEGORIES);
+      const target = pick(cat.items);
+      const distractors = sample(cat.items.filter(i=>i.w!==target.w), Math.min(2,cat.items.length-1));
+      return {
+        render:(box)=>{
+          box.appendChild(el('div','prompt-sub','याचा अर्थ काय?'));
+          box.appendChild(el('div','prompt-big', target.w));
+          speak(target.w);
+          const optCol = el('div','mcq-options');
+          shuffle([target,...distractors]).forEach(opt=>{
+            const b = el('button','mcq-btn', opt.en);
+            attachMCQ(b, opt.en===target.en, optCol, target.en);
+            optCol.appendChild(b);
+          });
+          box.appendChild(optCol);
+        }
+      };
+    } else {
+      const pair = pick(PAIRS);
+      const pool = pair.letters.flatMap(l=>l.items.map(it=>({ch:l.ch,item:it})));
+      const target = pick(pool);
+      return {
+        render:(box)=>{
+          box.appendChild(el('div','prompt-sub','कोणता आवाज ऐकलात?'));
+          const replay = el('button','replay-round-btn','🔊 पुन्हा ऐका');
+          replay.onclick = ()=>speak(target.item.w);
+          box.appendChild(replay);
+          speak(target.item.w);
+          const optRow = el('div','mcq-row');
+          shuffle(pair.letters.map(l=>l.ch)).forEach(ch=>{
+            const b = el('button','mcq-btn', ch);
+            attachMCQ(b, ch===target.ch, optRow, target.ch);
+            optRow.appendChild(b);
+          });
+          box.appendChild(optRow);
+        }
+      };
+    }
+  }
+  function attachMCQ(btn, isCorrect, wrap, correctLabel){
+    btn.onclick = ()=>{
+      btn.classList.add(isCorrect?'correct':'wrong');
+      wrap.querySelectorAll('.mcq-btn').forEach(x=>x.disabled=true);
+      if(isCorrect) score++;
+      else { const rb=[...wrap.querySelectorAll('.mcq-btn')].find(x=>x.textContent===correctLabel); if(rb) rb.classList.add('correct'); }
+      trackPractice();
+      round++;
+      setTimeout(next, 1100);
+    };
+  }
+  function next(){
+    if(round>=total){
+      let msg = 'आणखी सराव करूया!';
+      if(score>=7) msg = 'खूप छान! तू तज्ज्ञ झालास!';
+      else if(score>=5) msg = 'छान प्रयत्न!';
+      endScreen(container,'🏁 '+score+'/'+total, msg, ()=>startQuizGame(container));
+      quizzesCompleted++; checkBadges();
+      return;
+    }
+    container.innerHTML='';
+    container.appendChild(roundProgressHTML(round,total));
+    makeQuestion().render(container);
+  }
+  next();
+}
+
+/* Bonus: Songs */
+function renderSongs(container){
+  SONGS.forEach(song=>{
+    const card = el('div','card-block');
+    card.appendChild(el('div','section-label', song.title));
+    const lineEls = [];
+    song.lines.forEach(line=>{
+      const p = el('div','', line);
+      p.style.padding = '4px 0';
+      card.appendChild(p);
+      lineEls.push(p);
+    });
+    const playBtn = el('button','cta-btn','▶ गाणं ऐका');
+    playBtn.style.background = 'var(--teal)';
+    playBtn.onclick = ()=>{
+      speakParts(song.lines, {
+        onEachStart:(i)=>{ lineEls.forEach(el=>el.style.background=''); lineEls[i].style.background='var(--cream)'; },
+        onDone:()=>{ lineEls.forEach(el=>el.style.background=''); }
+      });
+      trackPractice();
+    };
+    card.appendChild(playBtn);
+    container.appendChild(card);
+  });
+}
+
+/* ================= PROGRESS TAB ================= */
+function renderProgress(main){
+  const stats = el('div','card-block');
+  stats.appendChild(el('div','section-label','माझी प्रगती'));
+  const row1 = el('div','stat-row');
+  row1.appendChild(statChip(wordsLearnedSet.size,'शब्द शिकले'));
+  row1.appendChild(statChip(masteredPairs.size,'अक्षरे पारंगत'));
+  stats.appendChild(row1);
+  const row2 = el('div','stat-row');
+  row2.appendChild(statChip(practiceCount,'उच्चार सराव'));
+  row2.appendChild(statChip(unlockedBadges.size,'बॅज'));
+  stats.appendChild(row2);
+  main.appendChild(stats);
+
+  const badgeBlock = el('div','card-block');
+  badgeBlock.appendChild(el('div','section-label','बॅजेस'));
+  const grid = el('div','badge-grid');
+  BADGES.forEach(b=>{
+    const unlocked = unlockedBadges.has(b.id);
+    const item = el('div','badge-item'+(unlocked?'':' locked'));
+    item.appendChild(el('div','bic', b.icon));
+    item.appendChild(el('div','bl', b.label));
+    grid.appendChild(item);
+  });
+  badgeBlock.appendChild(grid);
+  main.appendChild(badgeBlock);
+}
+
+/* ================= INIT ================= */
+render();
+updateStarPill();
+</script>
+</body>
+</html>
